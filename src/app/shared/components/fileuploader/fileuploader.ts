@@ -20,15 +20,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class Fileuploader implements OnDestroy {
   private destroy$ = new Subject<void>();
   private readonly ALLOWED_FILE_TYPES = [
-    'image/jpeg',
-    'image/png',
-    'image/gif',
-    'application/pdf',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    'video/mp4',
-    'audio/mpeg',
-    'audio/wav',
+    // Removing file type restrictions to allow all file types
   ];
 
   constructor(private toastr: ToastrService, private cdr: ChangeDetectorRef) {}
@@ -58,10 +50,6 @@ export class Fileuploader implements OnDestroy {
 
   handleFiles(acceptedFiles: File[]) {
     const validFiles = acceptedFiles.filter((file) => {
-      if (!this.ALLOWED_FILE_TYPES.includes(file.type)) {
-        this.toastr.error(`${file.name} has an unsupported file type.`);
-        return false;
-      }
       if (file.size > MAX_FILE_SIZE) {
         this.toastr.error(`${file.name} is too large. Max file size is 50MB.`);
         return false;

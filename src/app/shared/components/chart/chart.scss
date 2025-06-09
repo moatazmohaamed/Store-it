@@ -1,0 +1,26 @@
+#keyperform_Annotations_0 {
+  line-height: 0.7;
+}
+.text {
+font-family: inherit;
+font-size:30px;
+text-align:center;
+}
+.percentage {
+font-family: inherit;
+font-size:44px;
+text-align:center;
+margin-left:-8px;
+
+}
+@media screen and (max-width: 420px) {
+.text {
+font-size:20px;
+text-align:center;
+margin-left: 10px;
+}
+.percentage {
+font-size:30px;
+text-align:center;
+}
+}

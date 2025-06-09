@@ -1,19 +1,35 @@
-<div class="bg-rose-400 text-white p-4 rounded-lg flex justify-center items-center gap-5">
-    <ng-container *ngIf="chartOptions && chartOptions.series && chartOptions.chart">
-        <apx-chart
-          [series]="chartOptions.series"
-          [chart]="chartOptions.chart"
-          [labels]="chartOptions.labels"
-          [fill]="chartOptions.fill"
-          [stroke]="chartOptions.stroke"
-          [responsive]="chartOptions.responsive"
-          [plotOptions]="chartOptions.plotOptions"
-        >
-        </apx-chart>
-      </ng-container>
+<div class="bg-rose-400 text-white p-4 rounded-lg flex justify-center items-center flex-col  md:gap-2">
+  <ng-container *ngIf="chartOptions && chartOptions.axes">
+    <ejs-circulargauge [axes]="chartOptions.axes" width="400" height="400">
+    </ejs-circulargauge>
+    <div class="control-section">
+      <ejs-circulargauge id="keyperform" style='display:block;' background='transparent' (load)='loadGauge($event)'
+        width="400" height="400">
+        <e-axes>
+          <e-axis radius='90%' minimum=0 maximum=100 startAngle=220 endAngle=140 [majorTicks]='ticks'
+            [minorTicks]='ticks' [lineStyle]='lineStyle' [labelStyle]="labelStyle" [annotations]="annotations">
+            <e-pointers>
+              <e-pointer *ngFor="let pointer of secondGaugePointers" [type]="pointer.type"
+                [markerShape]="pointer.markerShape" [animation]="pointer.animation" [markerWidth]="pointer.markerWidth"
+                [markerHeight]="pointer.markerHeight" [radius]="pointer.radius" [color]="pointer.color"
+                [value]="pointer.value">
+              </e-pointer>
+            </e-pointers>
+            <e-ranges>
+              <e-range *ngFor="let range of secondGaugeRanges" [start]="range.start" [end]="range.end"
+                [startWidth]="range.startWidth" [endWidth]="range.endWidth" [color]="range.color"
+                [radius]="range.radius" [roundedCornerRadius]="range.roundedCornerRadius"
+                [linearGradient]="range.linearGradient">
+              </e-range>
+            </e-ranges>
+          </e-axis>
+        </e-axes>
+      </ejs-circulargauge>
+    </div>
+  </ng-container>
 
-  <div class="mt-4  text-center">
+  <div class="mt-4 text-center">
     <div class="font-semibold py-2 text-lg md:text-2xl">Available Storage</div>
-    <div class="opacity-80 text-sm md:text-lg">{{ formatFileSize(usedMb) }} / 2 GB</div>
+    <div class="opacity-80 text-md md:text-lg">{{ formatFileSize(usedMb) }} / 2 GB</div>
   </div>
 </div>

@@ -8,7 +8,6 @@ import { Sort } from '../../shared/components/sort/sort';
 import { Observable, Subscription } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-file-list',
