@@ -1,0 +1,65 @@
+<header class="mobile-header">
+  <img src="/assets/icons/logo-full-brand.svg" alt="logo" width="120" height="52" class="h-auto">
+
+
+  <div class="drawer lg:drawer-open drawer-end flex justify-end ">
+    <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+    <div class="">
+      <!-- Page content here -->
+      <label for="my-drawer-2">
+        <img class="drawer-button cursor-pointer" src="/assets/icons/menu.svg" alt="menu">
+      </label>
+
+    </div>
+    <div class="drawer-side ">
+      <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+      <div class="pt-0 px-3 bg-base-200 text-base-content h-screen w-80 ">
+        <div class="flex items-center justify-between pt-4 ">
+          <div class="header-user">
+            <img [src]="avatar" alt="avatar" width="44" height="44" class="header-user-avatar">
+            <div class="text-black sm:hidden lg:block">
+              <h2 class="subtitle-2 capitalize">{{ fullName }}</h2>
+              <p class="caption">{{ email }}</p>
+            </div>
+          </div>
+          <label for="my-drawer-2" class="cursor-pointer text-black">
+            <img src="/assets/icons/close-dark.svg" alt="close" width="24" height="24" />
+          </label>
+
+        </div>
+
+
+        <hr class="my-4 text-[#A3B2C7]">
+
+        <nav class="mobile-nav h5">
+          <ul class="mobile-nav-list h5 text-black">
+            @for(item of navItems; track item) {
+            <a [routerLink]="item.url" class="lg:w-full" routerLinkActive="shad-active"
+              [routerLinkActiveOptions]="{ exact: true }">
+
+
+              <li class="mobile-nav-item h5">
+                <img routerLinkActive="nav-icon-active" [routerLinkActiveOptions]="{ exact: true }" [src]="item.icon"
+                  alt="{{ item.name }} icon" class="w-[24px] h-[24px] nav-icon">
+                <p>{{ item.name }}</p>
+              </li>
+            </a>
+
+            }
+          </ul>
+        </nav>
+
+        <hr class="my-4 text-[#A3B2C7]">
+
+        <div class="flex justify-between flex-col gap-5 pb-5">
+          <app-fileuploader [currentUser]="currentUser"></app-fileuploader>
+          <button (click)="auth.signOut()" type="submit"
+            class="mobile-sign-out-button cursor-pointer flex justify-center">
+            <img src="/assets/icons/logout.svg" alt="logout" width="24" height="24" />
+            <p>Logout</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

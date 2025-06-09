@@ -1,0 +1,81 @@
+<form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="auth-form">
+  <h1 class="form-title">
+    @if (type === 'sign-in') {
+    Sign In
+    } @else {
+    Sign Up
+    }
+  </h1>
+
+  @if (type === 'sign-up') {
+  <div class="form-field">
+    <label class="form-label">Full Name</label>
+    <input type="text" formControlName="fullName" placeholder="Enter your full name" class="form-input">
+    @if (authForm.get('fullName')?.invalid && (authForm.get('fullName')?.dirty || authForm.get('fullName')?.touched)) {
+    <div class="form-message">
+      @if (authForm.get('fullName')?.errors?.['required']) {
+      <span>Full name is required</span>
+      }
+      @if (authForm.get('fullName')?.errors?.['minlength']) {
+      <span>Must be at least 2 characters</span>
+      }
+      @if (authForm.get('fullName')?.errors?.['maxlength']) {
+      <span>Cannot exceed 50 characters</span>
+      }
+    </div>
+    }
+  </div>
+  }
+
+  <div class="form-field">
+    <label class="form-label">Email</label>
+    <input type="email" formControlName="email" placeholder="Enter your email" class="form-input">
+    @if (authForm.get('email')?.invalid && (authForm.get('email')?.dirty || authForm.get('email')?.touched)) {
+    <div class="form-message">
+      @if (authForm.get('email')?.errors?.['required']) {
+      <span>Email is required</span>
+      }
+      @if (authForm.get('email')?.errors?.['email']) {
+      <span>Please enter a valid email</span>
+      }
+    </div>
+    }
+  </div>
+
+  <button type="submit" class="form-submit-button" [disabled]="isLoading || authForm.invalid">
+    @if (type === 'sign-in') {
+    Sign In
+    } @else {
+    Sign Up
+    }
+    @if (isLoading) {
+    <span class="ml-2  animate-spin">↻</span>
+    }
+  </button>
+
+  @if (errorMessage) {
+  <div class="error-message">*{{ errorMessage }}</div>
+  }
+
+  <div class="auth-switch flex justify-center items-center ">
+    <p class="text-light mx-2">
+      @if (type === 'sign-in') {
+      Don't have an account?
+      } @else {
+      Already have an account?
+      }
+    </p>
+    <button type="button" (click)="navigateToAuth()" class="text-brand cursor-pointer underline">
+      @if (type === 'sign-in') {
+      Sign Up
+      } @else {
+      Sign In
+      }
+    </button>
+  </div>
+</form>
+
+@if(accountId){
+<app-otpmodel [email]="authForm.value.email" [accountId]='accountId' [showModal]='true'>
+</app-otpmodel>
+}

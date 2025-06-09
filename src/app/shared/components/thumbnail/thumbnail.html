@@ -1,0 +1,6 @@
+<figure [class]="'thumbnail flex items-center justify-center ' + (className || '')">
+  <span class="  rounded-full  flex items-center justify-center overflow-hidden">
+    <img [src]="isImage ? url : getFileIcon(extension, type)" alt="thumbnail" width="56" height="56"
+      [class]="'w-full h-full object-cover ' + (imageClassName || '') + (isImage ? ' thumbnail-image' : '')" />
+  </span>
+</figure>

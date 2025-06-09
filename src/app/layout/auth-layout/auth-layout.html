@@ -1,0 +1,25 @@
+<div class="flex min-h-screen">
+  <!-- Left Section (hidden on small screens) -->
+  <section class="hidden  w-1/2 items-center justify-center bg-[#FA7275] p-10 lg:flex xl:w-2/5">
+    <div class="flex max-h-[800px] max-w-[430px] flex-col justify-center space-y-12">
+      <img src="assets/icons/logo-full.svg" alt="logo" width="224" height="82" class="h-auto" />
+
+      <div class="space-y-5 text-white">
+        <h1 class="h1">Manage your files the best way</h1>
+        <p class="body-1">This is a place where you can store all your documents.</p>
+      </div>
+
+      <img src="assets/images/files.png" alt="Files" width="342" height="342"
+        class="transition-all hover:rotate-2 hover:scale-105" />
+    </div>
+  </section>
+
+  <!-- Right Section -->
+  <section class="flex flex-1 flex-col items-center bg-white p-4 py-10 lg:justify-center lg:p-10 lg:py-0">
+    <div class="mb-16 lg:hidden">
+      <img src="assets/icons/logo-full-brand.svg" alt="logo" width="224" height="82"
+        class="h-auto w-[200px] lg:w-[250px]" />
+    </div>
+    <router-outlet></router-outlet>
+  </section>
+</div>

@@ -1,0 +1,33 @@
+<aside class="sidebar">
+  <a routerLink="/dashboard">
+    <img src="/assets/icons/logo-full-brand.svg" alt="Logo" class="sm:hidden lg:block h-auto   " width="160"
+      height="50">
+
+    <img src="/assets/icons/logo-brand.svg" alt="Logo" class="lg:hidden" width="52" height="52">
+  </a>
+  <nav class="sidebar-nav h5">
+    <ul class="flex flex-1 flex-col gap-6">
+      @for(item of navItems; track item) {
+      <a [routerLink]="item.url" class="lg:w-full" routerLinkActive="shad-active"
+        [routerLinkActiveOptions]="{ exact: true }">
+        <li class="sidebar-nav-item h5">
+          <img routerLinkActive="nav-icon-active" [routerLinkActiveOptions]="{ exact: true }" [src]="item.icon"
+            alt="{{ item.name }} icon" class="w-[24px] h-[24px] nav-icon">
+          <p class="hidden lg:block">{{ item.name }}</p>
+        </li>
+      </a>
+      }
+    </ul>
+  </nav>
+
+
+  <img src="/assets/images/files-2.png" alt="logo" width="506" height="418" class="hidden lg:block w-full">
+
+  <div class="sidebar-user-info">
+    <img [src]="avatar" alt="avatar" width="44" height="44" class="sidebar-user-avatar ">
+    <div class="hidden lg:block text-black">
+      <p class="subtitle-2 capitalize">{{fullName}}</p>
+      <p class="caption">{{email}}</p>
+    </div>
+  </div>
+</aside>

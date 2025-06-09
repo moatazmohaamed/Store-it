@@ -1,0 +1,21 @@
+<div class="cursor-pointer " (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+  <button type="button" class="uploader-button flex fkex-col items-center gap-2 cursor-pointer" (click)="fileInput.click()">
+    <img src="/assets/icons/upload.svg" width="24" height="24" alt="upload" />
+    <p class="text-white">Upload</p>
+  </button>
+  <input type="file" (change)="onFileSelect($event)" multiple hidden #fileInput />
+
+  <ul *ngIf="files.length > 0" class="uploader-preview-list">
+    <h4 class="h4 text-light-100">Uploading</h4>
+    <li *ngFor="let file of files" class="uploader-preview-item">
+      <div class="flex items-center gap-3">
+        <img [src]="getFileUrl(file)" [alt]="file.name" width="40" height="40" />
+        <div class="preview-item-name">
+          {{ file.name }}
+          <img src="/assets/icons/file-loader.gif" width="80" height="26" alt="Loader" />
+        </div>
+      </div>
+      <img src="/assets/icons/remove.svg" width="24" height="24" alt="Remove" (click)="removeFile(file.name)" />
+    </li>
+  </ul>
+</div>

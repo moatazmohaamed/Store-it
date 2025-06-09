@@ -1,0 +1,28 @@
+<div class="page-container">
+  <section class="w-full">
+    <h1 class="h1 capitalize">{{ type }}</h1>
+
+    <div class="total-size-section">
+      <p class="body-1">
+        Total: <span class="h5">{{totalSize}} </span>
+      </p>
+
+      <div class="sort-container">
+        <p class="body-1 hidden text-light-200 sm:block">Sort by:</p>
+        <app-sort></app-sort>
+      </div>
+    </div>
+
+  </section>
+
+  <section *ngIf="files.length > 0; else noFiles" class="file-list">
+    <app-card *ngFor="let file of files" [file]="file"></app-card>
+  </section>
+
+  <ng-template #noFiles>
+    <p class="empty-list">No files uploaded</p>
+  </ng-template>
+</div>
+
+
+

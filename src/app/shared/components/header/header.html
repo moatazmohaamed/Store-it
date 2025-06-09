@@ -1,0 +1,11 @@
+<header class="header">
+  <!-- search -->
+  <app-search></app-search>
+
+  <div class="header-wrapper">
+    <app-fileuploader [currentUser]="current"></app-fileuploader>
+    <button data-tip="Logout?" type="button" class="sign-out-button tooltip tooltip-bottom" (click)="auth.signOut()">
+      <img class="w-6" src="/assets/icons/logout.svg" alt="logout" width="24" height="24" />
+    </button>
+  </div>
+</header>

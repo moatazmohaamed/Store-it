@@ -1,0 +1,21 @@
+<div class="share-wrapper">
+  <p class="subtitle-2 pl-1 text-light-100">Share file with other users</p>
+
+  <input type="email" [value]="emailInput" (input)="onInput($event)" placeholder="Enter email address" class="share-input-field" />
+
+  <div class="pt-4">
+    <div class="flex justify-between">
+      <p class="subtitle-2 text-light-100">Shared with</p>
+      <p class="subtitle-2 text-light-200">{{ file.users.length }} users</p>
+    </div>
+
+    <ul class="pt-2">
+      <li *ngFor="let email of file.users" class="flex items-center justify-between gap-2">
+        <p class="subtitle-2">{{ email }}</p>
+        <button (click)="removeUser(email)" class="share-remove-user">
+          <img src="/assets/icons/remove.svg" alt="Remove" width="24" height="24" class="remove-icon" />
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

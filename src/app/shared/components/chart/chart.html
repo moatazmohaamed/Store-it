@@ -1,0 +1,19 @@
+<div class="bg-rose-400 text-white p-4 rounded-lg flex justify-center items-center gap-5">
+    <ng-container *ngIf="chartOptions && chartOptions.series && chartOptions.chart">
+        <apx-chart
+          [series]="chartOptions.series"
+          [chart]="chartOptions.chart"
+          [labels]="chartOptions.labels"
+          [fill]="chartOptions.fill"
+          [stroke]="chartOptions.stroke"
+          [responsive]="chartOptions.responsive"
+          [plotOptions]="chartOptions.plotOptions"
+        >
+        </apx-chart>
+      </ng-container>
+
+  <div class="mt-4  text-center">
+    <div class="font-semibold py-2 text-lg md:text-2xl">Available Storage</div>
+    <div class="opacity-80 text-sm md:text-lg">{{ formatFileSize(usedMb) }} / 2 GB</div>
+  </div>
+</div>

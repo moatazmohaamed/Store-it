@@ -1,0 +1,21 @@
+<div class="file-card">
+  <div class="flex justify-between">
+    <a [href]="file.url" target="_blank" class="cursor-pointer">
+      <app-thumbnail [type]="file.type" [extension]="file.extension" [url]="file.url" className="!size-20"
+        imageClassName="!size-16"></app-thumbnail>
+    </a>
+
+    <div class="flex flex-col items-end justify-between">
+      <app-actiondropdown [file]="file"></app-actiondropdown>
+      <p class="body-1 ">{{ convertFileSize(file.size) }}</p>
+    </div>
+  </div>
+
+  <div class="file-card-details">
+    <p class="subtitle-2 text-[#000] line-clamp-1">{{ file.name }}</p>
+    <app-formatted-date-time [date]="file.$createdAt"></app-formatted-date-time>
+    <p class="caption line-clamp-1 text-[#000]/30">
+      By: {{ file.owner.fullName }}
+    </p>
+  </div>
+</div>
