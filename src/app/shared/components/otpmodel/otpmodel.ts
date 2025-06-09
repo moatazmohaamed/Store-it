@@ -64,8 +64,12 @@ export class OTPmodel {
 
   onOtpPaste(event: ClipboardEvent): void {
     event.preventDefault();
-    const pasted = event.clipboardData?.getData('text') || '';
-    if (!/^\d{6}$/.test(pasted)) return;
+    const pasted = event.clipboardData?.getData('text').trim() || '';
+    if (!/^\d{6}$/.test(pasted)) {
+      this.toastr.error('Please paste a valid 6-digit OTP');
+      return;
+    }
+
     for (let i = 0; i < 6; i++) {
       this.otpInputs[i] = pasted[i];
       const inputRef = this[`otp${i + 1}` as keyof OTPmodel] as ElementRef;
@@ -73,6 +77,13 @@ export class OTPmodel {
         inputRef.nativeElement.value = pasted[i];
       }
     }
+
+    // Focus the last input after pasting
+    const lastInput = this[`otp6` as keyof OTPmodel] as ElementRef;
+    if (lastInput) {
+      lastInput.nativeElement.focus();
+    }
+
     this.otp = pasted;
   }
 

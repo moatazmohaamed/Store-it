@@ -230,7 +230,7 @@ export class Chart implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['used'] && this.used) {
+    if (changes['used']) {
       let currentValue = 0;
       if (this.used instanceof BehaviorSubject) {
         currentValue = this.used.value;
