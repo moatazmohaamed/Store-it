@@ -11,16 +11,16 @@ font-family: inherit;
 font-size:44px;
 text-align:center;
 margin-left:-8px;
-
 }
 @media screen and (max-width: 420px) {
 .text {
 font-size:20px;
 text-align:center;
-margin-left: 10px;
+width: 100%;
 }
 .percentage {
 font-size:30px;
 text-align:center;
+margin-right: 1rem;
 }
 }
