@@ -1,6 +1,8 @@
 import {
   Component,
   Input,
+  Output,
+  EventEmitter,
   ViewChild,
   ElementRef,
   AfterViewInit,
@@ -23,6 +25,7 @@ export class OTPmodel {
   @Input() showModal: Boolean = false;
   @Input() accountId: any = '';
   @Input() email: string = '';
+  @Output() showModalChange = new EventEmitter<boolean>();
   toastr = inject(ToastrService);
 
   @ViewChild('otp1') otp1!: ElementRef;
@@ -116,5 +119,9 @@ export class OTPmodel {
 
   closeModal() {
     this.showModal = false;
+    this.showModalChange.emit(false);
+    // Reset OTP inputs when closing
+    this.otpInputs = ['', '', '', '', '', ''];
+    this.otp = '';
   }
 }

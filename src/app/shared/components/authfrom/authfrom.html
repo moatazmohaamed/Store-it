@@ -76,6 +76,6 @@
 </form>
 
 @if(accountId){
-<app-otpmodel [email]="authForm.value.email" [accountId]='accountId' [showModal]='true'>
+<app-otpmodel [email]="authForm.value.email" [accountId]='accountId' [(showModal)]='showOtpModal'>
 </app-otpmodel>
 }

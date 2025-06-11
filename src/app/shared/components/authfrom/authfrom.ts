@@ -22,6 +22,7 @@ export class Authfrom {
   isLoading = false;
   errorMessage = '';
   accountId: any;
+  showOtpModal = false;
 
   authForm: FormGroup;
 
@@ -67,10 +68,12 @@ export class Authfrom {
           this.authForm.value.email
         );
         this.accountId = user;
+        this.showOtpModal = true;
       } else {
         const result = await this.auth.signInUser(this.authForm.value.email);
         if (result.accountId) {
           this.accountId = result.accountId;
+          this.showOtpModal = true;
         } else {
           this.errorMessage =
             result.error || 'Failed to sign in. Please try again.';
