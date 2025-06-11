@@ -5,7 +5,7 @@
     <app-mobilenavigation *ngIf="currentUser" [fullName]="fullName" [email]="email" [currentUser]="currentUser">
     </app-mobilenavigation>
     <app-header *ngIf="currentUser" [currentUser]="currentUser"></app-header>
-    <div class="main-content ">
+    <div class="main-content " #mainContent>
       <router-outlet></router-outlet>
       @if (isDashboardRoute) {
       <div class="dashboard-container">

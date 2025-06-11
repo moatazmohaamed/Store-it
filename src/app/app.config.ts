@@ -17,6 +17,7 @@ import {
 } from '@angular/platform-browser';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { ShepherdService } from 'angular-shepherd';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -44,5 +45,9 @@ export const appConfig: ApplicationConfig = {
       autoDismiss: true,
       newestOnTop: true,
     }),
+    {
+      provide: ShepherdService,
+      useClass: ShepherdService,
+    },
   ],
 };

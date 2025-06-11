@@ -1,4 +1,10 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -28,6 +34,7 @@ import { convertFileSize, getUsageSummary } from '../../shared/utils/utils';
 import { FormattedDateTime } from '../../shared/components/formatted-date-time/formatted-date-time';
 import { Thumbnail } from '../../shared/components/thumbnail/thumbnail';
 import { Actiondropdown } from '../../shared/components/actiondropdown/actiondropdown';
+import { ShepherdService } from 'angular-shepherd';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -56,6 +63,9 @@ export class DashboardLayout implements OnDestroy {
   route = inject(ActivatedRoute);
   isDashboardRoute: boolean = false;
   type: string = '';
+  private shepherdService = inject(ShepherdService);
+
+  @ViewChild('mainContent') mainContent!: ElementRef;
 
   constructor() {
     this.router.events
@@ -65,6 +75,9 @@ export class DashboardLayout implements OnDestroy {
       )
       .subscribe(() => {
         this.isDashboardRoute = this.router.url.endsWith('dashboard');
+        if (this.isDashboardRoute) {
+          setTimeout(() => this.startTour(), 1000);
+        }
       });
   }
 
@@ -74,6 +87,105 @@ export class DashboardLayout implements OnDestroy {
   totalSpace: any;
   usageSummary: UsageSummary[] = [];
   convertFileSize = convertFileSize;
+
+  private startTour() {
+    // Check if tour has been shown in this session
+    const hasSeenTour = sessionStorage.getItem('hasSeenTour');
+    if (hasSeenTour) {
+      return;
+    }
+
+    const steps = [
+      {
+        id: 'welcome',
+        title: 'Welcome to Store-It Dashboard',
+        text: 'Let us guide you through the main features of your dashboard.',
+        buttons: [
+          {
+            text: 'Skip',
+            action: () => this.shepherdService.cancel(),
+          },
+          {
+            text: 'Start Tour',
+            action: () => this.shepherdService.next(),
+          },
+        ],
+      },
+      {
+        id: 'storage-usage',
+        title: 'Storage Usage',
+        text: 'Here you can see your total storage usage and how much space you have left.',
+        attachTo: {
+          element: 'app-chart',
+          on: 'bottom' as const,
+        },
+        buttons: [
+          {
+            text: 'Back',
+            action: () => this.shepherdService.back(),
+          },
+          {
+            text: 'Next',
+            action: () => this.shepherdService.next(),
+          },
+        ],
+      },
+      {
+        id: 'file-summary',
+        title: 'File Summary',
+        text: 'View a summary of your files by type, including images, documents, and other files.',
+        attachTo: {
+          element: '.dashboard-summary-list',
+          on: 'left' as const,
+        },
+        buttons: [
+          {
+            text: 'Back',
+            action: () => this.shepherdService.back(),
+          },
+          {
+            text: 'Next',
+            action: () => this.shepherdService.next(),
+          },
+        ],
+      },
+      {
+        id: 'recent-files',
+        title: 'Recent Files',
+        text: 'Access your most recently uploaded files here. You can view, download, or manage them.',
+        attachTo: {
+          element: '.dashboard-recent-files',
+          on: 'right' as const,
+        },
+        buttons: [
+          {
+            text: 'Back',
+            action: () => this.shepherdService.back(),
+          },
+          {
+            text: 'Finish',
+            action: () => {
+              this.shepherdService.complete();
+              this.scrollToTop();
+              // Set flag in sessionStorage after tour is completed
+              sessionStorage.setItem('hasSeenTour', 'true');
+            },
+          },
+        ],
+      },
+    ];
+
+    this.shepherdService.defaultStepOptions = {
+      classes: 'shepherd-theme-custom',
+      scrollTo: true,
+      cancelIcon: {
+        enabled: true,
+      },
+    };
+
+    this.shepherdService.addSteps(steps);
+    this.shepherdService.start();
+  }
 
   async ngOnInit() {
     try {
@@ -99,6 +211,15 @@ export class DashboardLayout implements OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private scrollToTop() {
+    if (this.mainContent) {
+      this.mainContent.nativeElement.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
   }
 
   get fullName() {
