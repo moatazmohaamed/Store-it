@@ -336,6 +336,15 @@ body {
   border-radius: var(--shepherd-border-radius);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.7), 0 2px 4px -1px rgba(0, 0, 0, 0.8) !important;
   z-index: 9999222222;
+  width: 80% !important; /* Default width for mobile */
+  max-width: 400px; /* Maximum width for larger screens */
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .shepherd-element {
+    width: 100%;
+  }
 }
 
 .shepherd-header {
