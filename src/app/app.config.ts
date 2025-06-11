@@ -1,8 +1,4 @@
-import {
-  ApplicationConfig,
-  provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection,
-} from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import {
   provideRouter,
   withHashLocation,
@@ -21,7 +17,6 @@ import { ShepherdService } from 'angular-shepherd';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({
       eventCoalescing: true,
       runCoalescing: true,
