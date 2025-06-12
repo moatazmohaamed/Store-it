@@ -25,7 +25,7 @@ export const appConfig: ApplicationConfig = {
       routes,
       withViewTransitions(),
       withHashLocation(),
-      withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })
+      withInMemoryScrolling({ scrollPositionRestoration: 'top' })
     ),
     provideClientHydration(withEventReplay()),
     provideAnimations(),

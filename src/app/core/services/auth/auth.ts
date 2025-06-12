@@ -6,12 +6,14 @@ import {
   avatarPlaceholderUrl,
   parseStringfy,
 } from '../../../shared/utils/utils';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
   appwrite = inject(Appwrite);
+  toastr = inject(ToastrService);
   constructor() {}
 
   async getUserByEmail(email: string): Promise<any> {
@@ -36,7 +38,7 @@ export class Auth {
       );
       return result.userId;
     } catch (error) {
-      console.error('Failed to send email OTP', error);
+      this.toastr.error('Server is busy please try again later');
       return null;
     }
   }
