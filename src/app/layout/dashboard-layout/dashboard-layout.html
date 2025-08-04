@@ -1,7 +1,7 @@
-<main class="flex h-screen ">
+<main class="flex h-screen" id="smooth-wrapper">
   <app-sidebar [fullName]="fullName" [email]="email"></app-sidebar>
 
-  <section class="flex h-full flex-1 flex-col ">
+  <section class="flex h-full flex-1 flex-col min-h-screen" id="smooth-content">
     <app-mobilenavigation *ngIf="currentUser" [fullName]="fullName" [email]="email" [currentUser]="currentUser">
     </app-mobilenavigation>
     <app-header *ngIf="currentUser" [currentUser]="currentUser"></app-header>

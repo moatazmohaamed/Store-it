@@ -4,6 +4,7 @@ import {
   OnDestroy,
   ViewChild,
   ElementRef,
+  AfterViewInit,
 } from '@angular/core';
 import {
   ActivatedRoute,

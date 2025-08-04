@@ -1,5 +1,8 @@
-<select class="select focus:outline-0 focus:border-1 dropdown dropdown-center  w-full max-w-xs" [formControl]="sortControl">
+<div>
+  <select class="select focus:outline-0 focus:border-1 dropdown dropdown-center  w-full max-w-xs"
+    [formControl]="sortControl">
     <option *ngFor="let sort of sortTypes" [value]="sort.value">
-        {{ sort.label }}
+      {{ sort.label }}
     </option>
-</select>
+  </select>
+</div>
