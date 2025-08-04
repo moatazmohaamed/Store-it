@@ -7,27 +7,55 @@ import {
   parseStringfy,
 } from '../../../shared/utils/utils';
 import { ToastrService } from 'ngx-toastr';
+import { catchError, from, Observable, of, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
-  appwrite = inject(Appwrite);
-  toastr = inject(ToastrService);
+  private readonly appwrite = inject(Appwrite);
+  private readonly toastr = inject(ToastrService);
+  
+  // Cache for current user to avoid repeated API calls
+  private currentUserCache: any = null;
+  private userByEmailCache = new Map<string, any>();
+  
   constructor() {}
 
+  /**
+   * Get user by email with caching for better performance
+   */
   async getUserByEmail(email: string): Promise<any> {
+    // Check cache first
+    if (this.userByEmailCache.has(email)) {
+      return this.userByEmailCache.get(email);
+    }
+    
     try {
       const result = await this.appwrite.databases.listDocuments(
         environment.DATABASE_ID,
         environment.USERS_COLLECTION,
         [Query.equal('email', [email])]
       );
-      return result.total > 0 ? result.documents[0] : null;
+      
+      const user = result.total > 0 ? result.documents[0] : null;
+      
+      // Cache the result
+      this.userByEmailCache.set(email, user);
+      
+      return user;
     } catch (error) {
       console.error('Error fetching user', error);
       return null;
     }
+  }
+  
+  /**
+   * Get user by email as Observable for reactive programming
+   */
+  getUserByEmailObservable(email: string): Observable<any> {
+    return from(this.getUserByEmail(email));
   }
 
   async sendEmailOTP(email: string): Promise<string | null> {
@@ -81,7 +109,15 @@ export class Auth {
     }
   }
 
+  /**
+   * Get current user with caching for better performance
+   */
   async getCurrentUser(): Promise<any> {
+    // Return cached user if available
+    if (this.currentUserCache) {
+      return this.currentUserCache;
+    }
+    
     try {
       const result = await this.appwrite.account.get();
 
@@ -91,21 +127,51 @@ export class Auth {
         [Query.equal('accountId', result.$id)]
       );
 
-      return user.total > 0 ? parseStringfy(user.documents[0]) : null;
+      const userData = user.total > 0 ? parseStringfy(user.documents[0]) : null;
+      
+      // Cache the user data
+      this.currentUserCache = userData;
+      
+      return userData;
     } catch (error) {
-      console.error(error);
+      console.error('Error getting current user:', error);
       return null;
     }
   }
+  
+  /**
+   * Get current user as Observable for reactive programming
+   */
+  getCurrentUserObservable(): Observable<any> {
+    return from(this.getCurrentUser()).pipe(
+      catchError(error => {
+        console.error('Error getting current user:', error);
+        return of(null);
+      })
+    );
+  }
 
+  /**
+   * Sign out user and clear caches
+   */
   async signOut(): Promise<void> {
     try {
       await this.appwrite.account.deleteSession('current');
     } catch (error) {
       console.error('Error signing out', error);
     } finally {
+      // Clear caches when signing out
+      this.currentUserCache = null;
+      this.userByEmailCache.clear();
       this.appwrite.clearSession();
     }
+  }
+  
+  /**
+   * Sign out as Observable for reactive programming
+   */
+  signOutObservable(): Observable<void> {
+    return from(this.signOut());
   }
 
   async signInUser(

@@ -6,6 +6,7 @@ export const environment = {
   USERS_COLLECTION: '6890e73a003c0b2fc141',
   FILES_COLLECTION: '6890e7ab002e98d144be',
   BUCKET_STORAGE: '6890e899001590bcf403',
-  SECRET_kEY:
-    'standard_478f4standard_41edd5c9b6b632e693fd83660dd2d5530bbb6e2a703db17d4688deb9a4de7bea986c0fb768c596bfaba5e6e0f90a1b4e88fcd54cf850839bb3f3d9baeeebceffa4da114dca9d8fcc4cbc7715e7229c8b72053a12bf52b85f70b20376237869de23141560c3afe782b1e0ed6ec460b6f6c6db002dc72e3396ea8ec100cd79fa65037a4a987b7cb589c909b1780014b5db58a82276c20dabf9806f67c24b656763426b727f2405793cd2eca8b1fbfb84db5027a39ef457294016217ea7d73abe41870d2536a01eac53499bbdf0d67b2fe9cedb4fe3967f544a5442792ca932067b7853e7d52335958ea5f8a6b2d8214d776d92bba0a5bb0eeae24a6e209c4',
+  // Secret key should not be exposed in client-side code
+  // Use environment variables or a secure backend service instead
+  SECRET_KEY: process.env['APPWRITE_SECRET_KEY'] || '',
 };
